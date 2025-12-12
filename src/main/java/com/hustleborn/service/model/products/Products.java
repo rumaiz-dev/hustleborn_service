@@ -8,7 +8,7 @@ import java.util.UUID;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.hustleborn.service.converter.ConfugurationConverter.ConfigurationConverter;
 import com.hustleborn.service.model.accounts.Accounts;
-import com.hustleborn.service.model.productcategory.ProductCategory;
+import com.hustleborn.service.model.productcategory.ProductCategories;
 import com.hustleborn.service.converter.StringMapConverter;
 
 import jakarta.persistence.Column;
@@ -50,7 +50,7 @@ public class Products {
 
 	@ManyToMany(fetch = FetchType.LAZY)
 	@JoinTable(name = "product_product_category", joinColumns = @JoinColumn(name = "product_id"), inverseJoinColumns = @JoinColumn(name = "product_category_id"))
-	private List<ProductCategory> productCategories;
+	private List<ProductCategories> productCategories;
 
 	@Transient
 	private Accounts accounts;
@@ -156,11 +156,11 @@ public class Products {
 		this.accountId = accountId;
 	}
 
-	public List<ProductCategory> getProductCategories() {
+	public List<ProductCategories> getProductCategories() {
 		return productCategories;
 	}
 
-	public void setProductCategories(List<ProductCategory> productCategories) {
+	public void setProductCategories(List<ProductCategories> productCategories) {
 		this.productCategories = productCategories;
 	}
 
