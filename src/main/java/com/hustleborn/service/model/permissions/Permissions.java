@@ -8,7 +8,9 @@ public class Permissions {
 
 	@Id
 	private Long id;
+
 	private String name;
+
 	private String resourceType;
 
 	public Long getId() {
@@ -36,4 +38,3 @@ public class Permissions {
 	}
 
 }
-

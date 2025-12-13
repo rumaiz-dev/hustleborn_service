@@ -16,7 +16,7 @@ import jakarta.persistence.Converter;
 @Converter
 public class StringMapConverter implements AttributeConverter<Map<String, Object>, String> {
 
-	private Logger LOGGER = LoggerFactory.getLogger(StringMapConverter.class);
+	private Logger logger = LoggerFactory.getLogger(StringMapConverter.class);
 
 	@Override
 	public String convertToDatabaseColumn(Map<String, Object> data) {
@@ -24,7 +24,7 @@ public class StringMapConverter implements AttributeConverter<Map<String, Object
 			ObjectMapper objectMapper = new ObjectMapper();
 			return objectMapper.writeValueAsString(data);
 		} catch (JsonProcessingException e) {
-			LOGGER.error("Cannot convert map to json string.");
+			logger.error("Cannot convert map to json string.", e);
 			return null;
 		}
 	}
@@ -39,7 +39,7 @@ public class StringMapConverter implements AttributeConverter<Map<String, Object
 			ObjectMapper objectMapper = new ObjectMapper();
 			return objectMapper.readValue(dbData, LinkedHashMap.class);
 		} catch (IOException e) {
-			LOGGER.error("Error while trying to convert string(JSON) to map data structure.");
+			logger.error("Error while trying to convert string(JSON) to map data structure.");
 		}
 		return new LinkedHashMap<>();
 	}

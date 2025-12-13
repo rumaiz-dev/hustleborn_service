@@ -9,6 +9,7 @@ import java.util.function.Function;
 
 import javax.crypto.SecretKey;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
@@ -20,10 +21,13 @@ import io.jsonwebtoken.security.Keys;
 @Component
 public class JWTService {
 
-	private static final String SECRET_KEY = "your-super-secure-secret-key-change-this";
+	@Value("$security.jwt.secret")
+	private String SECRET_KEY;
+	
+	@Value("$security.jwt.expiration")
+	private String EXPIRATION_TIME;
 
-	private final long EXPIRATION_TIME = 15_552_000_000L;
-
+	@SuppressWarnings("deprecation")
 	public String generateToken(String email, String username, Long userId) {
 		Map<String, Object> claims = new HashMap<>();
 		claims.put("userId", userId);
