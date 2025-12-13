@@ -5,6 +5,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
+import org.hibernate.annotations.JdbcTypeCode;
+import org.hibernate.type.SqlTypes;
+
 import com.fasterxml.jackson.databind.JsonNode;
 import com.hustleborn.service.converter.ConfugurationConverter.ConfigurationConverter;
 import com.hustleborn.service.model.accounts.Accounts;
@@ -43,7 +46,7 @@ public class Products {
 
 	private Double salePrice;
 
-	private List<String> images;
+	private List<String> imageUrls;
 
 	@Column(nullable = false)
 	private Long accountId;
@@ -69,7 +72,7 @@ public class Products {
 
 	private LocalDateTime updatedAt;
 
-	private Integer storeId;
+//	private Integer storeId;
 
 	private UUID parentId;
 
@@ -85,8 +88,9 @@ public class Products {
 	@Column(columnDefinition = "TEXT")
 	private Map<String, ProductAttributes> attributes;
 
-//	@Column(columnDefinition = "TEXT")
-//	private Map<String, Object> dimensions;
+	@JdbcTypeCode(SqlTypes.JSON)
+	@Column(columnDefinition = "json")
+	private Map<String, Object> dimensions;
 
 	private UUID createdBy;
 
@@ -140,12 +144,12 @@ public class Products {
 		this.salePrice = salePrice;
 	}
 
-	public List<String> getImages() {
-		return images;
+	public List<String> getImageUrls() {
+		return imageUrls;
 	}
 
-	public void setImages(List<String> images) {
-		this.images = images;
+	public void setImageUrls(List<String> imageUrls) {
+		this.imageUrls = imageUrls;
 	}
 
 	public Long getAccountId() {
@@ -204,6 +208,14 @@ public class Products {
 		this.status = status;
 	}
 
+	public Map<String, Object> getDimensions() {
+		return dimensions;
+	}
+
+	public void setDimensions(Map<String, Object> dimensions) {
+		this.dimensions = dimensions;
+	}
+
 	public LocalDateTime getCreatedAt() {
 		return createdAt;
 	}
@@ -220,13 +232,13 @@ public class Products {
 		this.updatedAt = updatedAt;
 	}
 
-	public Integer getStoreId() {
-		return storeId;
-	}
-
-	public void setStoreId(Integer storeId) {
-		this.storeId = storeId;
-	}
+//	public Integer getStoreId() {
+//		return storeId;
+//	}
+//
+//	public void setStoreId(Integer storeId) {
+//		this.storeId = storeId;
+//	}
 
 	public UUID getParentId() {
 		return parentId;
