@@ -1,10 +1,8 @@
 package com.hustleborn.service.model.productvariants;
 
 import java.time.LocalDateTime;
-import java.util.List;
 
 import com.hustleborn.service.model.products.Products;
-import com.hustleborn.service.model.products.StockStatus;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -42,7 +40,7 @@ public class ProductVariants {
 	@Enumerated(EnumType.STRING)
 	private StockStatus stockStatus;
 
-	private List<String> imageUrls; 
+//	private List<String> imageUrls; 
 
 	private LocalDateTime createdAt;
 
@@ -104,13 +102,13 @@ public class ProductVariants {
 		this.stockStatus = stockStatus;
 	}
 
-	public List<String> getImageUrls() {
-		return imageUrls;
-	}
-
-	public void setImageUrls(List<String> imageUrls) {
-		this.imageUrls = imageUrls;
-	}
+//	public List<String> getImageUrls() {
+//		return imageUrls;
+//	}
+//
+//	public void setImageUrls(List<String> imageUrls) {
+//		this.imageUrls = imageUrls;
+//	}
 
 	public LocalDateTime getCreatedAt() {
 		return createdAt;

@@ -5,8 +5,8 @@ import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import com.hustleborn.service.model.products.StockStatus;
 import com.hustleborn.service.model.productvariants.ProductVariants;
+import com.hustleborn.service.model.productvariants.StockStatus;
 
 @Repository
 public interface ProductVariantsRepository extends JpaRepository<ProductVariants, Long> {

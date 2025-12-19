@@ -21,7 +21,7 @@ public class ProductCategories {
 
 	private String description;
 
-	private String image;
+//	private String image;
 
 	public Long getId() {
 		return id;
@@ -63,12 +63,12 @@ public class ProductCategories {
 		this.description = description;
 	}
 
-	public String getImage() {
-		return image;
-	}
-
-	public void setImage(String image) {
-		this.image = image;
-	}
+//	public String getImage() {
+//		return image;
+//	}
+//
+//	public void setImage(String image) {
+//		this.image = image;
+//	}
 
 }

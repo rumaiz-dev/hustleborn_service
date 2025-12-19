@@ -18,8 +18,8 @@ import com.hustleborn.service.model.auth.RegisterRequest;
 import com.hustleborn.service.model.userprofiles.UserProfiles;
 import com.hustleborn.service.model.users.Users;
 import com.hustleborn.service.repository.users.UsersRepository;
+import com.hustleborn.service.responses.ApiResponse;
 import com.hustleborn.service.service.jwt.JWTService;
-import com.hustleborn.service.util.response.ApiResponse;
 
 @Service
 public class AuthService {

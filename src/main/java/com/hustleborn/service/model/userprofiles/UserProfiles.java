@@ -37,7 +37,7 @@ public class UserProfiles {
 
 	private String phoneNumber;
 
-	private String imageUrl;
+//	private String imageUrl;
 
 	@JdbcTypeCode(SqlTypes.JSON)
 	@Column(columnDefinition = "json")
@@ -109,13 +109,13 @@ public class UserProfiles {
 		this.phoneNumber = phoneNumber;
 	}
 
-	public String getImageUrl() {
-		return imageUrl;
-	}
-
-	public void setImageUrl(String imageUrl) {
-		this.imageUrl = imageUrl;
-	}
+//	public String getImageUrl() {
+//		return imageUrl;
+//	}
+//
+//	public void setImageUrl(String imageUrl) {
+//		this.imageUrl = imageUrl;
+//	}
 
 	public Users getUser() {
 		return user;

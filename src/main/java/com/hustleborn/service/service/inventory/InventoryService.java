@@ -8,8 +8,8 @@ import org.springframework.stereotype.Service;
 
 import com.hustleborn.service.model.inventorytransactions.InventoryTransactions;
 import com.hustleborn.service.model.inventorytransactions.TransactionType;
-import com.hustleborn.service.model.products.StockStatus;
 import com.hustleborn.service.model.productvariants.ProductVariants;
+import com.hustleborn.service.model.productvariants.StockStatus;
 import com.hustleborn.service.repository.inventorytransactions.InventoryTransactionsRepository;
 import com.hustleborn.service.repository.products.ProductVariantsRepository;
 

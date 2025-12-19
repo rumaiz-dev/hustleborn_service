@@ -49,7 +49,7 @@ public class Products {
 
 	private String description;
 
-	private List<String> imageUrls;
+//	private List<String> imageUrls;
 
 	@Column(nullable = false)
 	private Long accountId;
@@ -149,13 +149,13 @@ public class Products {
 		this.description = description;
 	}
 
-	public List<String> getImageUrls() {
-		return imageUrls;
-	}
-
-	public void setImageUrls(List<String> imageUrls) {
-		this.imageUrls = imageUrls;
-	}
+//	public List<String> getImageUrls() {
+//		return imageUrls;
+//	}
+//
+//	public void setImageUrls(List<String> imageUrls) {
+//		this.imageUrls = imageUrls;
+//	}
 
 	public Long getAccountId() {
 		return accountId;

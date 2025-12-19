@@ -1,4 +1,4 @@
-package com.hustleborn.service.util.response;
+package com.hustleborn.service.responses;
 
 import java.util.Map;
 
