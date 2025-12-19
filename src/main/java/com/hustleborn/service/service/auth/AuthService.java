@@ -13,6 +13,8 @@ import org.springframework.stereotype.Service;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.hustleborn.service.model.auth.LoginRequest;
+import com.hustleborn.service.model.auth.RegisterRequest;
 import com.hustleborn.service.model.userprofiles.UserProfiles;
 import com.hustleborn.service.model.users.Users;
 import com.hustleborn.service.repository.users.UsersRepository;
@@ -22,61 +24,59 @@ import com.hustleborn.service.util.response.ApiResponse;
 @Service
 public class AuthService {
 
-    @Autowired
-    private AuthenticationManager authenticationManager;
+	@Autowired
+	private AuthenticationManager authenticationManager;
 
-    @Autowired
-    private JWTService jwtService;
+	@Autowired
+	private JWTService jwtService;
 
-    @Autowired
-    private UsersRepository usersRepository;
+	@Autowired
+	private UsersRepository usersRepository;
 
-    @Autowired
-    private PasswordEncoder passwordEncoder;
+	@Autowired
+	private PasswordEncoder passwordEncoder;
 
-    public ApiResponse login(Users loginRequest) {
-        Authentication authentication = authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword()));
+	public ApiResponse login(LoginRequest loginRequest) {
+		Authentication authentication = authenticationManager.authenticate(
+				new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword()));
 
-        SecurityContextHolder.getContext().setAuthentication(authentication);
+		SecurityContextHolder.getContext().setAuthentication(authentication);
 
-        Users user = usersRepository.findByUsername(loginRequest.getUsername()).orElseThrow();
+		Users user = usersRepository.findByUsername(loginRequest.getUsername()).orElseThrow();
 
-        String token = jwtService.generateToken(user.getUserProfile().getEmail(), user.getUsername(), user.getId());
+		String token = jwtService.generateToken(user.getUserProfile().getEmail(), user.getUsername(), user.getId());
 
-        Map<String, Object> data = new HashMap<>();
-        data.put("token", token);
-        data.put("username", user.getUsername());
-        data.put("userId", user.getId());
-        data.put("email", user.getUserProfile().getEmail());
+		Map<String, Object> data = new HashMap<>();
+		data.put("token", token);
+		return new ApiResponse(true, "Login successful", data);
+	}
 
-        return new ApiResponse(true, "Login successful", data);
-    }
+	public ApiResponse register(RegisterRequest registerRequest) {
+		if (usersRepository.existsByUsernameAndEmail(registerRequest.getUsername(), registerRequest.getEmail())) {
+			return new ApiResponse(false, "Username or Email already exists", null);
+		}
+//		JWTTokenDetails jwtTokenDetails = JWTExtractor
+//				.extraction(SecurityContextHolder.getContext().getAuthentication());
 
-    public ApiResponse register(Users registerRequest) {
-        if (usersRepository.existsByUsername(registerRequest.getUsername())) {
-            return new ApiResponse(false, "Username already exists", null);
-        }
+		Users user = new Users();
+		user.setUsername(registerRequest.getUsername());
+		user.setPassword(passwordEncoder.encode(registerRequest.getPassword()));
+		user.setDisplayName(registerRequest.getDisplayName());
+		user.setEnabled(true);
+		user.setCreatedAt(LocalDate.now());
+		user.setUpdatedAt(LocalDate.now());
 
-        Users user = new Users();
-        user.setUsername(registerRequest.getUsername());
-        user.setPassword(passwordEncoder.encode(registerRequest.getPassword()));
-        user.setDisplayName(registerRequest.getDisplayName());
-        user.setEnabled(true);
-        user.setCreatedAt(LocalDate.now());
-        user.setUpdatedAt(LocalDate.now());
+		UserProfiles profile = new UserProfiles();
+		profile.setEmail(registerRequest.getEmail());
+		profile.setUser(user);
+		user.setUserProfile(profile);
 
-        UserProfiles profile = new UserProfiles();
-        profile.setEmail(registerRequest.getEmail());
-        profile.setUser(user);
-        user.setUserProfile(profile);
+		Users savedUser = usersRepository.save(user);
 
-        Users savedUser = usersRepository.save(user);
+		Map<String, Object> data = new HashMap<>();
+		data.put("username", savedUser.getUsername());
+		data.put("userId", savedUser.getId());
 
-        Map<String, Object> data = new HashMap<>();
-        data.put("username", savedUser.getUsername());
-        data.put("userId", savedUser.getId());
-
-        return new ApiResponse(true, "User registered successfully", data);
-    }
+		return new ApiResponse(true, "User registered successfully", data);
+	}
 }

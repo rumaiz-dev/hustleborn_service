@@ -7,7 +7,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.hustleborn.service.model.users.Users;
+import com.hustleborn.service.model.auth.LoginRequest;
+import com.hustleborn.service.model.auth.RegisterRequest;
 import com.hustleborn.service.service.auth.AuthService;
 import com.hustleborn.service.util.response.ApiResponse;
 
@@ -19,13 +20,13 @@ public class AuthController {
     private AuthService authService;
 
     @PostMapping("/login")
-    public ResponseEntity<ApiResponse> login(@RequestBody Users loginRequest) {
+    public ResponseEntity<ApiResponse> login(@RequestBody LoginRequest loginRequest) {
         ApiResponse response = authService.login(loginRequest);
         return ResponseEntity.ok(response);
     }
 
     @PostMapping("/register")
-    public ResponseEntity<ApiResponse> register(@RequestBody Users registerRequest) {
+    public ResponseEntity<ApiResponse> register(@RequestBody RegisterRequest registerRequest) {
         ApiResponse response = authService.register(registerRequest);
         return ResponseEntity.ok(response);
     }

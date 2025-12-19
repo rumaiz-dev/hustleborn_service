@@ -21,13 +21,12 @@ import io.jsonwebtoken.security.Keys;
 @Component
 public class JWTService {
 
-	@Value("$security.jwt.secret")
+	@Value("${security.jwt.secret}")
 	private String SECRET_KEY;
-	
-	@Value("$security.jwt.expiration")
-	private String EXPIRATION_TIME;
 
-	@SuppressWarnings("deprecation")
+	@Value("${security.jwt.expiration}")
+	private Long EXPIRATION_TIME;
+
 	public String generateToken(String email, String username, Long userId) {
 		Map<String, Object> claims = new HashMap<>();
 		claims.put("userId", userId);

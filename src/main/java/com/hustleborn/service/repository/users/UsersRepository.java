@@ -11,6 +11,6 @@ import com.hustleborn.service.model.users.Users;
 public interface UsersRepository extends JpaRepository<Users, Long> {
 	Optional<Users> findByUsername(String username);
 
-	boolean existsByUsername(String email);
+	boolean existsByUsernameAndEmail(String username, String email);
 
 }
