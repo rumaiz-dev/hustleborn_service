@@ -2,12 +2,11 @@ package com.hustleborn.service.model.users;
 
 import java.time.LocalDate;
 import java.util.Map;
-import java.util.Set;
 
 import org.hibernate.annotations.JdbcTypeCode;
 import org.hibernate.type.SqlTypes;
+import org.springframework.data.annotation.Transient;
 
-import com.hustleborn.service.model.roles.Roles;
 import com.hustleborn.service.model.userprofiles.UserProfiles;
 
 import jakarta.persistence.CascadeType;
@@ -17,9 +16,6 @@ import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.JoinTable;
-import jakarta.persistence.ManyToMany;
 import jakarta.persistence.OneToOne;
 
 @Entity
@@ -50,12 +46,11 @@ public class Users {
 	@Column(columnDefinition = "json")
 	private Map<String, Object> preferences;
 
-	@ManyToMany(fetch = FetchType.EAGER)
-	@JoinTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
-	private Set<Roles> roles;
-
 	@OneToOne(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	private UserProfiles userProfiles;
+
+	@Transient
+	private String email;
 
 	public Long getId() {
 		return id;
@@ -137,14 +132,6 @@ public class Users {
 		this.preferences = preferences;
 	}
 
-	public Set<Roles> getRoles() {
-		return roles;
-	}
-
-	public void setRoles(Set<Roles> roles) {
-		this.roles = roles;
-	}
-
 	public UserProfiles getUserProfile() {
 		return userProfiles;
 	}
@@ -159,4 +146,13 @@ public class Users {
 		Object token = preferences.get("fcmToken");
 		return token != null ? token.toString() : null;
 	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
 }
