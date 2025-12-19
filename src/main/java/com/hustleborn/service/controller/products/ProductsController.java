@@ -12,10 +12,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.hustleborn.service.exceptions.ApiException;
 import com.hustleborn.service.model.products.Products;
 import com.hustleborn.service.model.productvariants.ProductVariants;
 import com.hustleborn.service.service.products.ProductsService;
+import com.hustleborn.service.utils.exceptions.ApiException;
 
 @RestController
 @RequestMapping("/api/products")

@@ -12,10 +12,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.hustleborn.service.exceptions.ApiException;
 import com.hustleborn.service.model.inventorytransactions.InventoryTransactions;
 import com.hustleborn.service.model.productvariants.ProductVariants;
 import com.hustleborn.service.service.inventory.InventoryService;
+import com.hustleborn.service.utils.exceptions.ApiException;
 
 @RestController
 @RequestMapping("/api/inventory")

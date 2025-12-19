@@ -1,4 +1,4 @@
-package com.hustleborn.service.exceptions;
+package com.hustleborn.service.utils.exceptions;
 
 import org.springframework.http.HttpStatus;
 

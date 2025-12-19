@@ -9,8 +9,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.hustleborn.service.model.auth.LoginRequest;
 import com.hustleborn.service.model.auth.RegisterRequest;
-import com.hustleborn.service.responses.ApiResponse;
 import com.hustleborn.service.service.auth.AuthService;
+import com.hustleborn.service.utils.responses.ApiResponse;
 
 @RestController
 @RequestMapping("/api/auth")
