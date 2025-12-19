@@ -1,6 +1,5 @@
 package com.hustleborn.service.model.productcategory;
 
-import java.util.UUID;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -12,23 +11,23 @@ public class ProductCategories {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private UUID id;
+	private Long id;
 
 	private String name;
 
 	private String slug;
 
-	private UUID parent;
+	private Long parent;
 
 	private String description;
 
 	private String image;
 
-	public UUID getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(UUID id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 
@@ -48,11 +47,11 @@ public class ProductCategories {
 		this.slug = slug;
 	}
 
-	public UUID getParent() {
+	public Long getParent() {
 		return parent;
 	}
 
-	public void setParent(UUID parent) {
+	public void setParent(Long parent) {
 		this.parent = parent;
 	}
 

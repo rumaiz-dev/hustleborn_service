@@ -1,7 +1,6 @@
 package com.hustleborn.service.model.productDetails;
 
 import java.time.LocalDateTime;
-import java.util.UUID;
 
 import org.hibernate.annotations.CreationTimestamp;
 
@@ -13,7 +12,7 @@ import jakarta.persistence.Id;
 public class ProductDetails {
 
 	@Id
-	private UUID productId;
+	private Long productId;
 
 	@Column(columnDefinition = "TEXT")
 	private String description;
@@ -61,11 +60,11 @@ public class ProductDetails {
 	@Column(unique = true)
 	private String slug;
 
-	public UUID getProductId() {
+	public Long getProductId() {
 		return productId;
 	}
 
-	public void setProductId(UUID productId) {
+	public void setProductId(Long productId) {
 		this.productId = productId;
 	}
 

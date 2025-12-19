@@ -3,7 +3,7 @@ package com.hustleborn.service.model.products;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
-import java.util.UUID;
+
 
 import org.hibernate.annotations.JdbcTypeCode;
 import org.hibernate.type.SqlTypes;
@@ -11,6 +11,7 @@ import org.hibernate.type.SqlTypes;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.hustleborn.service.converter.ConfugurationConverter.ConfigurationConverter;
 import com.hustleborn.service.model.accounts.Accounts;
+import com.hustleborn.service.model.productattributes.ProductAttributes;
 import com.hustleborn.service.model.productcategory.ProductCategories;
 import com.hustleborn.service.converter.StringMapConverter;
 
@@ -33,7 +34,7 @@ public class Products {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private UUID id;
+	private Long id;
 
 	private String name;
 
@@ -45,6 +46,8 @@ public class Products {
 	private Double price;
 
 	private Double salePrice;
+
+	private String description;
 
 	private List<String> imageUrls;
 
@@ -72,9 +75,7 @@ public class Products {
 
 	private LocalDateTime updatedAt;
 
-//	private Integer storeId;
-
-	private UUID parentId;
+	private Long parentId;
 
 	private String variant;
 
@@ -92,15 +93,11 @@ public class Products {
 	@Column(columnDefinition = "json")
 	private Map<String, Object> dimensions;
 
-	private UUID createdBy;
-
-	private UUID updatedBy;
-
-	public UUID getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(UUID id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 
@@ -142,6 +139,14 @@ public class Products {
 
 	public void setSalePrice(Double salePrice) {
 		this.salePrice = salePrice;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
 	}
 
 	public List<String> getImageUrls() {
@@ -232,19 +237,11 @@ public class Products {
 		this.updatedAt = updatedAt;
 	}
 
-//	public Integer getStoreId() {
-//		return storeId;
-//	}
-//
-//	public void setStoreId(Integer storeId) {
-//		this.storeId = storeId;
-//	}
-
-	public UUID getParentId() {
+	public Long getParentId() {
 		return parentId;
 	}
 
-	public void setParentId(UUID parentId) {
+	public void setParentId(Long parentId) {
 		this.parentId = parentId;
 	}
 
@@ -280,28 +277,6 @@ public class Products {
 		this.attributes = attributes;
 	}
 
-//	public Map<String, Object> getDimensions() {
-//		return dimensions;
-//	}
-//
-//	public void setDimensions(Map<String, Object> dimensions) {
-//		this.dimensions = dimensions;
-//	}
 
-	public UUID getCreatedBy() {
-		return createdBy;
-	}
-
-	public void setCreatedBy(UUID createdBy) {
-		this.createdBy = createdBy;
-	}
-
-	public UUID getUpdatedBy() {
-		return updatedBy;
-	}
-
-	public void setUpdatedBy(UUID updatedBy) {
-		this.updatedBy = updatedBy;
-	}
 
 }

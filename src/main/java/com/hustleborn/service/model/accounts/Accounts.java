@@ -1,6 +1,5 @@
 package com.hustleborn.service.model.accounts;
 
-import java.util.UUID;
 
 import com.hustleborn.service.model.users.UserStatus;
 
@@ -16,7 +15,7 @@ import jakarta.persistence.Id;
 public class Accounts {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private UUID id;
+	private Long id;
 
 	private String name;
 
@@ -39,11 +38,11 @@ public class Accounts {
 	@Column(nullable = true)
 	private String code;
 
-	public UUID getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(UUID id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 
