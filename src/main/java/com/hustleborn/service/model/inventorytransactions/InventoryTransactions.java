@@ -41,6 +41,8 @@ public class InventoryTransactions {
 
     private Long userId;
 
+    private Long billId;
+
     public Long getId() {
         return id;
     }
@@ -103,5 +105,13 @@ public class InventoryTransactions {
 
     public void setUserId(Long userId) {
         this.userId = userId;
+    }
+
+    public Long getBillId() {
+        return billId;
+    }
+
+    public void setBillId(Long billId) {
+        this.billId = billId;
     }
 }

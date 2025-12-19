@@ -42,6 +42,15 @@ public class InventoryController {
 		}
 	}
 
+	@GetMapping("/out-of-stock")
+	public ResponseEntity<List<ProductVariants>> getOutOfStock() {
+		try {
+			return ResponseEntity.ok(inventoryService.getOutOfStockItems());
+		} catch (Exception e) {
+			throw new ApiException("Unable to fetch out of stock items", e, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
+
 	@PostMapping("/adjust")
 	public ResponseEntity<ProductVariants> adjustStock(@RequestParam Long variantId, @RequestParam int quantity,
 			@RequestParam String reason, @RequestParam Long userId) {
@@ -59,6 +68,26 @@ public class InventoryController {
 			return ResponseEntity.ok(inventoryService.recordSale(variantId, quantity, posReference, userId));
 		} catch (Exception e) {
 			throw new ApiException("Unable to record sale", e, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
+
+	@PostMapping("/refund")
+	public ResponseEntity<ProductVariants> recordRefund(@RequestParam Long variantId, @RequestParam int quantity,
+			@RequestParam String reason, @RequestParam Long userId) {
+		try {
+			return ResponseEntity.ok(inventoryService.recordRefund(variantId, quantity, reason, userId));
+		} catch (Exception e) {
+			throw new ApiException("Unable to record refund", e, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
+
+	@PostMapping("/restock")
+	public ResponseEntity<ProductVariants> recordRestock(@RequestParam Long variantId, @RequestParam int quantity,
+			@RequestParam String reason, @RequestParam Long userId) {
+		try {
+			return ResponseEntity.ok(inventoryService.recordRestock(variantId, quantity, reason, userId));
+		} catch (Exception e) {
+			throw new ApiException("Unable to record restock", e, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 

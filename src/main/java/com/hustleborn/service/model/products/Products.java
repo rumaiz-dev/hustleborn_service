@@ -45,6 +45,8 @@ public class Products {
 
 	private Double price;
 
+	private Double purchasingPrice;
+
 	private Double salePrice;
 
 	private String description;
@@ -131,6 +133,14 @@ public class Products {
 
 	public void setPrice(Double price) {
 		this.price = price;
+	}
+
+	public Double getPurchasingPrice() {
+		return purchasingPrice;
+	}
+
+	public void setPurchasingPrice(Double purchasingPrice) {
+		this.purchasingPrice = purchasingPrice;
 	}
 
 	public Double getSalePrice() {

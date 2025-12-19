@@ -30,10 +30,17 @@ public class InventoryService {
         return productVariantsRepository.findByStockStatus(StockStatus.Lowstock);
     }
 
+    public List<ProductVariants> getOutOfStockItems() {
+        return productVariantsRepository.findByStockStatus(StockStatus.Outofstock);
+    }
+
     public ProductVariants adjustStock(Long variantId, int quantity, String reason, Long userId) {
         ProductVariants variant = productVariantsRepository.findById(variantId).orElse(null);
         if (variant != null) {
             int newQuantity = variant.getStockQuantity() + quantity;
+            if (newQuantity < 0) {
+                throw new IllegalArgumentException("Adjustment would result in negative stock quantity");
+            }
             variant.setStockQuantity(newQuantity);
             variant.setStockStatus(determineStockStatus(newQuantity));
             variant.setUpdatedAt(LocalDateTime.now());
@@ -63,8 +70,52 @@ public class InventoryService {
             InventoryTransactions transaction = new InventoryTransactions();
             transaction.setVariant(variant);
             transaction.setTransactionType(TransactionType.Sale);
-            transaction.setQuantity(-quantity); 
+            transaction.setQuantity(-quantity);
             transaction.setPosReference(posReference);
+            transaction.setTimestamp(LocalDateTime.now());
+            transaction.setUserId(userId);
+            inventoryTransactionsRepository.save(transaction);
+
+            return productVariantsRepository.save(variant);
+        }
+        return null;
+    }
+
+    public ProductVariants recordRefund(Long variantId, int quantity, String reason, Long userId) {
+        ProductVariants variant = productVariantsRepository.findById(variantId).orElse(null);
+        if (variant != null) {
+            int newQuantity = variant.getStockQuantity() + quantity;
+            variant.setStockQuantity(newQuantity);
+            variant.setStockStatus(determineStockStatus(newQuantity));
+            variant.setUpdatedAt(LocalDateTime.now());
+
+            InventoryTransactions transaction = new InventoryTransactions();
+            transaction.setVariant(variant);
+            transaction.setTransactionType(TransactionType.Refund);
+            transaction.setQuantity(quantity);
+            transaction.setReason(reason);
+            transaction.setTimestamp(LocalDateTime.now());
+            transaction.setUserId(userId);
+            inventoryTransactionsRepository.save(transaction);
+
+            return productVariantsRepository.save(variant);
+        }
+        return null;
+    }
+
+    public ProductVariants recordRestock(Long variantId, int quantity, String reason, Long userId) {
+        ProductVariants variant = productVariantsRepository.findById(variantId).orElse(null);
+        if (variant != null) {
+            int newQuantity = variant.getStockQuantity() + quantity;
+            variant.setStockQuantity(newQuantity);
+            variant.setStockStatus(determineStockStatus(newQuantity));
+            variant.setUpdatedAt(LocalDateTime.now());
+
+            InventoryTransactions transaction = new InventoryTransactions();
+            transaction.setVariant(variant);
+            transaction.setTransactionType(TransactionType.Restock);
+            transaction.setQuantity(quantity);
+            transaction.setReason(reason);
             transaction.setTimestamp(LocalDateTime.now());
             transaction.setUserId(userId);
             inventoryTransactionsRepository.save(transaction);
