@@ -4,5 +4,6 @@ public enum TransactionType {
     Sale,
     Restock,
     Adjustment,
-    Refund
+    Refund,
+    Damage
 }

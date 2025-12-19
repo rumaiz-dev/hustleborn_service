@@ -73,6 +73,41 @@ public class BillService {
         return billRepository.save(bill);
     }
 
+    public Bills payBill(Long billId, Long userId) {
+        Bills bill = billRepository.findById(billId).orElse(null);
+        if (bill != null && bill.getStatus() == BillStatus.Pending) {
+            bill.setStatus(BillStatus.Paid);
+            bill.setUpdatedAt(LocalDateTime.now());
+
+            // Reduce stock and record inventory transactions
+            for (BillItems item : bill.getBillItems()) {
+                ProductVariants variant = item.getVariant();
+                if (variant.getStockQuantity() >= item.getQuantity()) {
+                    variant.setStockQuantity(variant.getStockQuantity() - item.getQuantity());
+                    variant.setStockStatus(determineStockStatus(variant.getStockQuantity()));
+                    variant.setUpdatedAt(LocalDateTime.now());
+                    productVariantsRepository.save(variant);
+
+                    InventoryTransactions transaction = new InventoryTransactions();
+                    transaction.setVariant(variant);
+                    transaction.setTransactionType(TransactionType.Sale);
+                    transaction.setQuantity(-item.getQuantity()); // negative for outgoing
+                    transaction.setReason("Bill payment");
+                    transaction.setTimestamp(LocalDateTime.now());
+                    transaction.setUserId(userId);
+                    transaction.setBillId(billId);
+                    inventoryTransactionsRepository.save(transaction);
+                } else {
+                    // Insufficient stock, but since we assume it's checked, perhaps throw error
+                    throw new RuntimeException("Insufficient stock for variant " + variant.getId());
+                }
+            }
+
+            return billRepository.save(bill);
+        }
+        return null;
+    }
+
     public void deleteBill(Long id) {
         billRepository.deleteById(id);
     }

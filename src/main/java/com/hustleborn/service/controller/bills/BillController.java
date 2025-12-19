@@ -68,6 +68,20 @@ public class BillController {
         }
     }
 
+    @PostMapping("/{id}/pay")
+    public ResponseEntity<Bills> payBill(@PathVariable Long id, @RequestParam Long userId) {
+        try {
+            Bills paidBill = billService.payBill(id, userId);
+            if (paidBill != null) {
+                return ResponseEntity.ok(paidBill);
+            } else {
+                return ResponseEntity.badRequest().build();
+            }
+        } catch (Exception e) {
+            throw new ApiException("Unable to pay bill", e, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
     @PostMapping("/{id}/refund")
     public ResponseEntity<Bills> refundBill(@PathVariable Long id, @RequestParam Long userId) {
         try {
