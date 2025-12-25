@@ -8,11 +8,11 @@ import org.springframework.stereotype.Service;
 
 import com.hustleborn.service.model.products.Products;
 import com.hustleborn.service.model.productvariants.ProductVariants;
-import com.hustleborn.service.repository.products.ProductVariantsRepository;
 import com.hustleborn.service.repository.products.ProductsRepository;
+import com.hustleborn.service.repository.productvariants.ProductVariantsRepository;
 
 @Service
-public class ProductsService {
+public class ProductsService implements IProductsService {
 
 	@Autowired
 	private ProductsRepository productsRepository;

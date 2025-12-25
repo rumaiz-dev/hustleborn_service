@@ -10,7 +10,7 @@ import com.hustleborn.service.model.expenses.Expense;
 import com.hustleborn.service.repository.expenses.ExpenseRepository;
 
 @Service
-public class ExpenseService {
+public class ExpenseService implements IExpenseService {
 
     @Autowired
     private ExpenseRepository expenseRepository;

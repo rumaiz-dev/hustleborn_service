@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.hustleborn.service.model.bills.Bills;
-import com.hustleborn.service.service.bills.BillService;
+import com.hustleborn.service.service.bills.IBillService;
 import com.hustleborn.service.utils.exceptions.ApiException;
 
 @RestController
@@ -24,7 +24,7 @@ import com.hustleborn.service.utils.exceptions.ApiException;
 public class BillController {
 
     @Autowired
-    private BillService billService;
+    private IBillService billService;
 
     @GetMapping
     public ResponseEntity<List<Bills>> getAllBills() {

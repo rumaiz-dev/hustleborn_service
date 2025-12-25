@@ -1,7 +1,9 @@
-package com.hustleborn.service.model.accounting;
+package com.hustleborn.service.model.journalentry;
 
 import java.time.LocalDateTime;
 import java.util.List;
+
+import com.hustleborn.service.model.journalentryline.JournalEntryLine;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;

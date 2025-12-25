@@ -1,5 +1,6 @@
-package com.hustleborn.service.model.bills;
+package com.hustleborn.service.model.billitems;
 
+import com.hustleborn.service.model.bills.Bills;
 import com.hustleborn.service.model.productvariants.ProductVariants;
 
 import jakarta.persistence.Entity;

@@ -13,8 +13,8 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
-import com.hustleborn.service.model.bills.BillItems;
 import com.hustleborn.service.model.bills.Bills;
+import com.hustleborn.service.model.billitems.BillItems;
 import com.hustleborn.service.model.bills.BillStatus;
 import com.hustleborn.service.model.productvariants.ProductVariants;
 import com.hustleborn.service.model.products.Products;

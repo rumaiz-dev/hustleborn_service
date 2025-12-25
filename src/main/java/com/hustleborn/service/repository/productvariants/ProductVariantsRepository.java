@@ -1,4 +1,4 @@
-package com.hustleborn.service.repository.products;
+package com.hustleborn.service.repository.productvariants;
 
 import java.util.List;
 

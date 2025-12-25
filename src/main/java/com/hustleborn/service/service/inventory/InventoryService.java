@@ -6,21 +6,29 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.hustleborn.service.config.InventoryConfig;
 import com.hustleborn.service.model.inventorytransactions.InventoryTransactions;
 import com.hustleborn.service.model.inventorytransactions.TransactionType;
 import com.hustleborn.service.model.productvariants.ProductVariants;
 import com.hustleborn.service.model.productvariants.StockStatus;
 import com.hustleborn.service.repository.inventorytransactions.InventoryTransactionsRepository;
-import com.hustleborn.service.repository.products.ProductVariantsRepository;
+import com.hustleborn.service.repository.productvariants.ProductVariantsRepository;
+import com.hustleborn.service.service.inventorytransaction.InventoryTransactionService;
 
 @Service
-public class InventoryService {
+public class InventoryService implements IInventoryService {
 
     @Autowired
     private ProductVariantsRepository productVariantsRepository;
 
     @Autowired
     private InventoryTransactionsRepository inventoryTransactionsRepository;
+
+    @Autowired
+    private InventoryConfig inventoryConfig;
+
+    @Autowired
+    private InventoryTransactionService inventoryTransactionService;
 
     public List<ProductVariants> getAllInventory() {
         return productVariantsRepository.findAll();
@@ -45,14 +53,7 @@ public class InventoryService {
             variant.setStockStatus(determineStockStatus(newQuantity));
             variant.setUpdatedAt(LocalDateTime.now());
 
-            InventoryTransactions transaction = new InventoryTransactions();
-            transaction.setVariant(variant);
-            transaction.setTransactionType(TransactionType.Adjustment);
-            transaction.setQuantity(quantity);
-            transaction.setReason(reason);
-            transaction.setTimestamp(LocalDateTime.now());
-            transaction.setUserId(userId);
-            inventoryTransactionsRepository.save(transaction);
+            inventoryTransactionService.logTransaction(variant, TransactionType.Adjustment, quantity, reason, null, userId);
 
             return productVariantsRepository.save(variant);
         }
@@ -67,14 +68,7 @@ public class InventoryService {
             variant.setStockStatus(determineStockStatus(newQuantity));
             variant.setUpdatedAt(LocalDateTime.now());
 
-            InventoryTransactions transaction = new InventoryTransactions();
-            transaction.setVariant(variant);
-            transaction.setTransactionType(TransactionType.Sale);
-            transaction.setQuantity(-quantity);
-            transaction.setPosReference(posReference);
-            transaction.setTimestamp(LocalDateTime.now());
-            transaction.setUserId(userId);
-            inventoryTransactionsRepository.save(transaction);
+            inventoryTransactionService.logTransaction(variant, TransactionType.Sale, -quantity, null, posReference, userId);
 
             return productVariantsRepository.save(variant);
         }
@@ -89,14 +83,7 @@ public class InventoryService {
             variant.setStockStatus(determineStockStatus(newQuantity));
             variant.setUpdatedAt(LocalDateTime.now());
 
-            InventoryTransactions transaction = new InventoryTransactions();
-            transaction.setVariant(variant);
-            transaction.setTransactionType(TransactionType.Refund);
-            transaction.setQuantity(quantity);
-            transaction.setReason(reason);
-            transaction.setTimestamp(LocalDateTime.now());
-            transaction.setUserId(userId);
-            inventoryTransactionsRepository.save(transaction);
+            inventoryTransactionService.logTransaction(variant, TransactionType.Refund, quantity, reason, null, userId);
 
             return productVariantsRepository.save(variant);
         }
@@ -111,14 +98,7 @@ public class InventoryService {
             variant.setStockStatus(determineStockStatus(newQuantity));
             variant.setUpdatedAt(LocalDateTime.now());
 
-            InventoryTransactions transaction = new InventoryTransactions();
-            transaction.setVariant(variant);
-            transaction.setTransactionType(TransactionType.Restock);
-            transaction.setQuantity(quantity);
-            transaction.setReason(reason);
-            transaction.setTimestamp(LocalDateTime.now());
-            transaction.setUserId(userId);
-            inventoryTransactionsRepository.save(transaction);
+            inventoryTransactionService.logTransaction(variant, TransactionType.Restock, quantity, reason, null, userId);
 
             return productVariantsRepository.save(variant);
         }
@@ -126,9 +106,9 @@ public class InventoryService {
     }
 
     private StockStatus determineStockStatus(int quantity) {
-        if (quantity <= 0) {
+        if (quantity <= inventoryConfig.getOutOfStockThreshold()) {
             return StockStatus.Outofstock;
-        } else if (quantity <= 5) { 
+        } else if (quantity <= inventoryConfig.getLowStockThreshold()) {
             return StockStatus.Lowstock;
         } else {
             return StockStatus.Instock;

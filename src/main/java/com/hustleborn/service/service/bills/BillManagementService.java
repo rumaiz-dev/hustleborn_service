@@ -2,7 +2,6 @@ package com.hustleborn.service.service.bills;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -10,28 +9,27 @@ import org.springframework.stereotype.Service;
 import com.hustleborn.service.model.bills.Bills;
 import com.hustleborn.service.model.bills.BillStatus;
 import com.hustleborn.service.repository.bills.BillRepository;
-import com.hustleborn.service.service.payments.IPaymentService;
 
 @Service
-public class BillService implements IBillService {
+public class BillManagementService implements IBillManagementService {
 
     @Autowired
     private BillRepository billRepository;
 
     @Autowired
-    private IPaymentService paymentService;
-
-    @Autowired
     private BillCalculator billCalculator;
 
+    @Override
     public List<Bills> getAllBills() {
         return billRepository.findAll();
     }
 
+    @Override
     public Bills getBillById(Long id) {
         return billRepository.findById(id).orElse(null);
     }
 
+    @Override
     public Bills createBill(Bills bill) {
         bill.setCreatedAt(LocalDateTime.now());
         bill.setUpdatedAt(LocalDateTime.now());
@@ -42,25 +40,14 @@ public class BillService implements IBillService {
         return billRepository.save(bill);
     }
 
+    @Override
     public Bills updateBill(Bills bill) {
         bill.setUpdatedAt(LocalDateTime.now());
         return billRepository.save(bill);
     }
 
-    public Bills payBill(Long billId, Long userId) {
-        return paymentService.payBill(billId, userId);
-    }
-
+    @Override
     public void deleteBill(Long id) {
         billRepository.deleteById(id);
     }
-
-    public Bills refundBill(Long billId, Long userId) {
-        return paymentService.refundBill(billId, userId);
-    }
-
-    public Bills partialRefund(Long billId, Map<Long, Integer> itemRefunds, Long userId) {
-        return paymentService.partialRefund(billId, itemRefunds, userId);
-    }
-
 }

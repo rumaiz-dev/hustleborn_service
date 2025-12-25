@@ -1,4 +1,7 @@
-package com.hustleborn.service.model.accounting;
+package com.hustleborn.service.model.journalentryline;
+
+import com.hustleborn.service.model.accounting.Account;
+import com.hustleborn.service.model.journalentry.JournalEntry;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;

@@ -44,7 +44,6 @@ public class ExpenseController {
             ApiResponse response = new ApiResponse(true, "Expense retrieved successfully", data);
             return ResponseEntity.ok(response);
         } else {
-            ApiResponse response = new ApiResponse(false, "Expense not found", null);
             return ResponseEntity.notFound().build();
         }
     }

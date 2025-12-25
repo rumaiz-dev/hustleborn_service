@@ -3,6 +3,8 @@ package com.hustleborn.service.model.bills;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import com.hustleborn.service.model.billitems.BillItems;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
