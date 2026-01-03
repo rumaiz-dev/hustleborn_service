@@ -8,9 +8,6 @@ import java.util.Map;
 import org.hibernate.annotations.JdbcTypeCode;
 import org.hibernate.type.SqlTypes;
 
-import com.fasterxml.jackson.databind.JsonNode;
-import com.hustleborn.service.converter.ConfugurationConverter.ConfigurationConverter;
-import com.hustleborn.service.model.accounts.Accounts;
 import com.hustleborn.service.model.productattributes.ProductAttributes;
 import com.hustleborn.service.model.productcategory.ProductCategories;
 import com.hustleborn.service.converter.StringMapConverter;
@@ -27,7 +24,6 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
-import jakarta.persistence.Transient;
 
 @Entity
 public class Products {
@@ -60,8 +56,6 @@ public class Products {
 	@JoinTable(name = "product_product_category", joinColumns = @JoinColumn(name = "product_id"), inverseJoinColumns = @JoinColumn(name = "product_category_id"))
 	private List<ProductCategories> productCategories;
 
-	@Transient
-	private Accounts accounts;
 
 	@Column(unique = true)
 	private String code;
@@ -82,10 +76,6 @@ public class Products {
 	private String variant;
 
 	private String linkAddress;
-
-	@Column(name = "configuration", columnDefinition = "TEXT")
-	@Convert(converter = ConfigurationConverter.class)
-	private JsonNode configuration;
 
 	@Convert(converter = StringMapConverter.class)
 	@Column(columnDefinition = "TEXT")
@@ -183,14 +173,6 @@ public class Products {
 		this.productCategories = productCategories;
 	}
 
-	public Accounts getAccounts() {
-		return accounts;
-	}
-
-	public void setAccounts(Accounts accounts) {
-		this.accounts = accounts;
-	}
-
 	public String getCode() {
 		return code;
 	}
@@ -269,14 +251,6 @@ public class Products {
 
 	public void setLinkAddress(String linkAddress) {
 		this.linkAddress = linkAddress;
-	}
-
-	public JsonNode getConfiguration() {
-		return configuration;
-	}
-
-	public void setConfiguration(JsonNode configuration) {
-		this.configuration = configuration;
 	}
 
 	public Map<String, ProductAttributes> getAttributes() {

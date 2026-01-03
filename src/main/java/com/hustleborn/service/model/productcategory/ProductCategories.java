@@ -21,7 +21,7 @@ public class ProductCategories {
 
 	private String description;
 
-//	private String image;
+//	private String imageUrl;
 
 	public Long getId() {
 		return id;
