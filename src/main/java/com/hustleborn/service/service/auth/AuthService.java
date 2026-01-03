@@ -55,9 +55,6 @@ public class AuthService {
 		if (usersRepository.existsByUsernameAndEmail(registerRequest.getUsername(), registerRequest.getEmail())) {
 			return new ApiResponse(false, "Username or Email already exists", null);
 		}
-//		JWTTokenDetails jwtTokenDetails = JWTExtractor
-//				.extraction(SecurityContextHolder.getContext().getAuthentication());
-
 		Users user = new Users();
 		user.setUsername(registerRequest.getUsername());
 		user.setPassword(passwordEncoder.encode(registerRequest.getPassword()));

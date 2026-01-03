@@ -16,4 +16,6 @@ public interface InventoryTransactionsRepository extends JpaRepository<Inventory
     List<InventoryTransactions> findByTransactionType(TransactionType transactionType);
 
     List<InventoryTransactions> findByPosReference(String posReference);
+
+    List<InventoryTransactions> findByStoreId(Long storeId);
 }

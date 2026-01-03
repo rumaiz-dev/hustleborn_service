@@ -52,6 +52,8 @@ public class Products {
 	@Column(nullable = false)
 	private Long accountId;
 
+	private Long storeId;
+
 	@ManyToMany(fetch = FetchType.LAZY)
 	@JoinTable(name = "product_product_category", joinColumns = @JoinColumn(name = "product_id"), inverseJoinColumns = @JoinColumn(name = "product_category_id"))
 	private List<ProductCategories> productCategories;
@@ -163,6 +165,14 @@ public class Products {
 
 	public void setAccountId(Long accountId) {
 		this.accountId = accountId;
+	}
+
+	public Long getStoreId() {
+		return storeId;
+	}
+
+	public void setStoreId(Long storeId) {
+		this.storeId = storeId;
 	}
 
 	public List<ProductCategories> getProductCategories() {

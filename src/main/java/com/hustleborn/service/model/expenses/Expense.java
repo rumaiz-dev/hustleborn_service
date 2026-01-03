@@ -29,6 +29,8 @@ public class Expense {
 
     private Long accountId;
 
+    private Long storeId;
+
     private LocalDateTime createdAt;
 
     private LocalDateTime updatedAt;
@@ -81,6 +83,14 @@ public class Expense {
 
     public void setAccountId(Long accountId) {
         this.accountId = accountId;
+    }
+
+    public Long getStoreId() {
+        return storeId;
+    }
+
+    public void setStoreId(Long storeId) {
+        this.storeId = storeId;
     }
 
     public LocalDateTime getCreatedAt() {

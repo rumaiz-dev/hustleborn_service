@@ -41,6 +41,8 @@ public class Bills {
 
     private Long userId;
 
+    private Long storeId;
+
     private LocalDateTime createdAt;
 
     private LocalDateTime updatedAt;
@@ -120,6 +122,14 @@ public class Bills {
 
     public void setUserId(Long userId) {
         this.userId = userId;
+    }
+
+    public Long getStoreId() {
+        return storeId;
+    }
+
+    public void setStoreId(Long storeId) {
+        this.storeId = storeId;
     }
 
     public LocalDateTime getCreatedAt() {

@@ -16,4 +16,6 @@ public interface ProductVariantsRepository extends JpaRepository<ProductVariants
     List<ProductVariants> findByStockStatus(StockStatus stockStatus);
 
     List<ProductVariants> findBySku(String sku);
+
+    List<ProductVariants> findByStoreId(Long storeId);
 }

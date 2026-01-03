@@ -12,4 +12,5 @@ import com.hustleborn.service.model.bills.Bills;
 public interface BillRepository extends JpaRepository<Bills, Long> {
 
     List<Bills> findByStatus(BillStatus status);
+    List<Bills> findByStoreId(Long storeId);
 }

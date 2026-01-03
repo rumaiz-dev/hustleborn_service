@@ -40,7 +40,9 @@ public class ProductVariants {
 	@Enumerated(EnumType.STRING)
 	private StockStatus stockStatus;
 
-//	private List<String> imageUrls; 
+//	private List<String> imageUrls;
+
+	private Long storeId;
 
 	private LocalDateTime createdAt;
 
@@ -100,6 +102,14 @@ public class ProductVariants {
 
 	public void setStockStatus(StockStatus stockStatus) {
 		this.stockStatus = stockStatus;
+	}
+
+	public Long getStoreId() {
+		return storeId;
+	}
+
+	public void setStoreId(Long storeId) {
+		this.storeId = storeId;
 	}
 
 //	public List<String> getImageUrls() {

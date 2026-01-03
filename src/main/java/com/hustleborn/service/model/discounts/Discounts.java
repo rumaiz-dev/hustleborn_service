@@ -34,6 +34,7 @@ public class Discounts {
 
     private Boolean isActive;
 
+    private Long storeId;
 
     public Long getId() {
         return id;
@@ -97,5 +98,13 @@ public class Discounts {
 
     public void setIsActive(Boolean isActive) {
         this.isActive = isActive;
+    }
+
+    public Long getStoreId() {
+        return storeId;
+    }
+
+    public void setStoreId(Long storeId) {
+        this.storeId = storeId;
     }
 }

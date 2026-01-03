@@ -11,4 +11,5 @@ import com.hustleborn.service.model.expenses.Expense;
 public interface ExpenseRepository extends JpaRepository<Expense, Long> {
 
     List<Expense> findByAccountId(Long accountId);
+    List<Expense> findByStoreId(Long storeId);
 }
