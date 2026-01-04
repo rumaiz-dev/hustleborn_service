@@ -14,14 +14,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.hustleborn.service.model.stores.Store;
-import com.hustleborn.service.service.stores.IStoreService;
+import com.hustleborn.service.service.stores.StoreService;
 
 @RestController
 @RequestMapping("/api/stores")
 public class StoreController {
 
 	@Autowired
-	private IStoreService storeService;
+	private StoreService storeService;
 
 	@GetMapping
 	public ResponseEntity<List<Store>> getAllStores() {

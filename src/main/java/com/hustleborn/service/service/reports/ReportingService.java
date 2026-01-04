@@ -15,7 +15,7 @@ import com.hustleborn.service.repository.expenses.ExpenseRepository;
 import com.hustleborn.service.repository.inventorytransactions.InventoryTransactionsRepository;
 
 @Service
-public class ReportingService implements IReportingService {
+public class ReportingService {
 
     @Autowired
     private BillRepository billRepository;

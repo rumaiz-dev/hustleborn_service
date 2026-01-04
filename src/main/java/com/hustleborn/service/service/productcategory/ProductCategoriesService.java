@@ -21,7 +21,7 @@ import com.hustleborn.service.utils.exceptions.ApiException;
 import org.springframework.http.HttpStatus;
 
 @Service
-public class ProductCategoriesService implements IProductCategoriesService {
+public class ProductCategoriesService {
 
     @Autowired
     private ProductCategoriesRepository productCategoriesRepository;
@@ -29,25 +29,22 @@ public class ProductCategoriesService implements IProductCategoriesService {
     @Autowired
     private ProductCategoryClosureRepository productCategoryClosureRepository;
 
-    @Override
+
     public List<ProductCategories> getAllCategories() {
         return productCategoriesRepository.findAll();
     }
 
-    @Override
     @Transactional
     public ProductCategories createCategory(ProductCategories category) {
-        // Validation
+ 
         if (category.getName() == null || category.getName().trim().isEmpty()) {
             throw new ApiException("Category name is required", null, HttpStatus.BAD_REQUEST);
         }
 
-        // Generate slug if not provided
         if (category.getSlug() == null || category.getSlug().trim().isEmpty()) {
             category.setSlug(generateSlug(category.getName()));
         }
 
-        // Check if parent exists if set
         if (category.getParent() != null) {
             Optional<ProductCategories> parent = productCategoriesRepository.findById(category.getParent());
             if (!parent.isPresent()) {
@@ -55,7 +52,6 @@ public class ProductCategoriesService implements IProductCategoriesService {
             }
         }
 
-        // Check slug uniqueness
         Optional<ProductCategories> existing = productCategoriesRepository.findAll().stream()
             .filter(c -> category.getSlug().equals(c.getSlug()))
             .findFirst();
@@ -68,13 +64,13 @@ public class ProductCategoriesService implements IProductCategoriesService {
         return savedCategory;
     }
 
-    @Override
+
     public ProductCategories getCategoryById(Long id) {
         return productCategoriesRepository.findById(id)
             .orElseThrow(() -> new ApiException("Category not found", null, HttpStatus.NOT_FOUND));
     }
 
-    @Override
+ 
     @Transactional
     public ProductCategories updateCategory(Long id, ProductCategories categoryDetails) {
         ProductCategories category = getCategoryById(id);
@@ -119,7 +115,6 @@ public class ProductCategoriesService implements IProductCategoriesService {
         return savedCategory;
     }
 
-    @Override
     @Transactional
     public void deleteCategory(Long id) {
         ProductCategories category = getCategoryById(id);
@@ -132,28 +127,24 @@ public class ProductCategoriesService implements IProductCategoriesService {
         productCategoriesRepository.delete(category);
     }
 
-    @Override
     public List<ProductCategories> getSubcategories(Long parentId) {
         List<ProductCategoryClosure> closures = productCategoryClosureRepository.findDirectChildren(parentId);
         List<Long> ids = closures.stream().map(ProductCategoryClosure::getDescendantId).collect(Collectors.toList());
         return productCategoriesRepository.findAllById(ids);
     }
 
-    @Override
     public List<ProductCategories> getAllDescendants(Long categoryId) {
         List<ProductCategoryClosure> closures = productCategoryClosureRepository.findDescendantsExcludingSelf(categoryId);
         List<Long> ids = closures.stream().map(ProductCategoryClosure::getDescendantId).distinct().collect(Collectors.toList());
         return productCategoriesRepository.findAllById(ids);
     }
 
-    @Override
     public List<ProductCategories> getAllAncestors(Long categoryId) {
         List<ProductCategoryClosure> closures = productCategoryClosureRepository.findAncestors(categoryId);
         List<Long> ids = closures.stream().filter(c -> c.getDepth() > 0).map(ProductCategoryClosure::getAncestorId).distinct().collect(Collectors.toList());
         return productCategoriesRepository.findAllById(ids);
     }
 
-    @Override
     public void populateClosureTable() {
         productCategoryClosureRepository.deleteAll();
         List<ProductCategories> roots = productCategoriesRepository.findByParent(null);

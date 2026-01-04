@@ -69,6 +69,9 @@ public class Products {
 	@Enumerated(EnumType.STRING)
 	private ProductStatus status;
 
+	@Enumerated(EnumType.STRING)
+	private ProductType productType;
+
 	private LocalDateTime createdAt;
 
 	private LocalDateTime updatedAt;
@@ -213,6 +216,14 @@ public class Products {
 
 	public void setStatus(ProductStatus status) {
 		this.status = status;
+	}
+
+	public ProductType getProductType() {
+		return productType;
+	}
+
+	public void setProductType(ProductType productType) {
+		this.productType = productType;
 	}
 
 	public Map<String, Object> getDimensions() {
